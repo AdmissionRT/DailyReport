@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo Cáo Công Việc Hàng Ngày – Tuyển Sinh</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-tap-highlight-color:transparent}
+body{font-family:'Roboto',sans-serif;background:#f0f4f8;color:#1e293b;min-height:100vh;padding-bottom:72px}
+input,select,textarea,button{font-family:'Roboto',sans-serif}
+
+:root{
+  --blue:#1d4ed8;--blue-mid:#3b82f6;--blue-lt:#eff6ff;--blue-pale:#dbeafe;--blue-dark:#1e3a8a;
+  --green:#15803d;--green-mid:#16a34a;--green-lt:#f0fdf4;--green-pale:#dcfce7;--green-dark:#14532d;
+  --amber:#d97706;--amber-lt:#fffbeb;
+  --gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;
+  --gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;
+  --white:#fff;--radius:8px;--radius-lg:12px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.07);--shadow:0 2px 8px rgba(0,0,0,.1);
+  --rp:var(--blue-dark);--ra:var(--blue-mid);--rlt:var(--blue-lt);--rpa:var(--blue-pale);
+}
+body.role-admin{--rp:var(--green-dark);--ra:var(--green-mid);--rlt:var(--green-lt);--rpa:var(--green-pale)}
+
+/* ── HEADER ── */
+.hd{background:linear-gradient(135deg,#0f2952 0%,#1a56db 100%);padding:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.hd-top{display:flex;align-items:center;padding:12px 16px 10px;gap:12px}
+.hd-logo{width:36px;height:36px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hd-logo svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
+.hd-info{flex:1;min-width:0}
+.hd-info h1{color:#fff;font-size:.95rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hd-info p{color:rgba(255,255,255,.6);font-size:.72rem;margin-top:1px}
+.hd-actions{display:flex;gap:6px;flex-shrink:0}
+.hd-btn{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);color:#fff;border-radius:6px;padding:5px 10px;font-size:.73rem;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:4px;transition:background .2s;white-space:nowrap}
+.hd-btn:hover{background:rgba(255,255,255,.25)}
+.hd-btn svg{width:13px;height:13px;flex-shrink:0}
+.tab-bar{display:flex;border-top:1px solid rgba(255,255,255,.12)}
+.tab-btn{flex:1;padding:10px 8px;border:none;background:transparent;color:rgba(255,255,255,.55);font-size:.8rem;font-weight:700;letter-spacing:.3px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;text-transform:uppercase}
+.tab-btn:hover{color:#fff;background:rgba(255,255,255,.08)}
+.tab-btn.active{color:#fff;border-bottom-color:#fff}
+body.role-admin .tab-btn.tab-admin.active{border-bottom-color:#86efac;color:#86efac}
+
+/* ── MAIN LAYOUT ── */
+.main{max-width:760px;margin:0 auto;padding:14px 14px 0}
+
+/* ── INFO BAR ── */
+.info-bar{background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:14px;margin-bottom:12px}
+.info-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.info-row.row3{grid-template-columns:1fr 1fr 1fr}
+.f{display:flex;flex-direction:column;gap:4px}
+.f.span2{grid-column:1/-1}
+.fl{font-size:.68rem;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.6px}
+.fi{padding:8px 11px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:.86rem;color:var(--gray-800);background:var(--white);width:100%;transition:border .15s;-webkit-appearance:none}
+.fi:focus{outline:none;border-color:var(--ra);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
+.ca-wrap{display:flex;gap:8px}
+.ca-opt{flex:1;position:relative}
+.ca-opt input{position:absolute;opacity:0;width:0;height:0}
+.ca-lbl{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;padding:7px 4px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:.78rem;font-weight:500;cursor:pointer;background:var(--white);transition:all .18s;text-align:center}
+.ca-lbl small{font-size:.67rem;font-weight:400;color:var(--gray-400)}
+.ca-opt input:checked+.ca-lbl{border-color:var(--ra);background:var(--rlt);color:var(--rp);font-weight:700}
+.ca-opt input:checked+.ca-lbl small{color:var(--ra)}
+
+/* ── SECTION ── */
+.sec{margin-bottom:12px;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
+.sec-hd{background:var(--rp);color:#fff;padding:9px 14px;display:flex;align-items:center;gap:8px}
+.sec-hd h2{font-size:.82rem;font-weight:700;letter-spacing:.2px}
+.sec-hd .note{font-size:.69rem;color:rgba(255,255,255,.6);margin-left:auto;white-space:nowrap}
+.sec-bd{background:var(--white)}
+
+/* ── GROUP LABEL ── */
+.grp{padding:5px 14px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--gray-200);display:flex;align-items:center;gap:6px}
+.grp-blue{background:#dbeafe;color:#1e3a8a}
+.grp-green{background:#d1fae5;color:#14532d}
+.grp-gray{background:#f1f5f9;color:#475569}
+
+/* ── KPI TABLE ── */
+.kt{width:100%;border-collapse:collapse}
+.kt th{padding:6px 8px;font-size:.67rem;font-weight:700;color:var(--gray-500);background:var(--gray-50);text-align:center;border-bottom:1.5px solid var(--gray-200);white-space:nowrap}
+.kt th.tl{text-align:left}
+.kt td{padding:6px 7px;border-bottom:1px solid var(--gray-100);vertical-align:middle}
+.kt tr:last-child td{border-bottom:none}
+.kt tr:hover td{background:#fafbfc}
+.s-cell{text-align:center;font-size:.72rem;font-weight:700;color:var(--ra);width:26px;padding:6px 4px}
+.l-cell{font-size:.81rem;color:var(--gray-700);min-width:110px;line-height:1.4}
+.n-cell{width:64px;padding:4px}
+.n-cell input{width:100%;padding:5px 4px;border:1.5px solid var(--gray-200);border-radius:5px;font-size:.84rem;text-align:center;background:var(--white);transition:border .15s}
+.n-cell input:focus{outline:none;border-color:var(--ra)}
+.t-cell{width:64px;padding:4px}
+.t-cell input{width:100%;padding:5px 4px;border:1.5px solid var(--gray-200);border-radius:5px;font-size:.84rem;font-weight:700;text-align:center;background:var(--rpa);color:var(--rp);pointer-events:none}
+.g-cell{min-width:88px;padding:4px}
+.g-cell input,.g-cell textarea{width:100%;padding:5px 7px;border:1.5px solid var(--gray-200);border-radius:5px;font-size:.75rem;color:var(--gray-700);resize:none;transition:border .15s;background:var(--white)}
+.g-cell input:focus,.g-cell textarea:focus{outline:none;border-color:var(--ra)}
+.sub-inputs{display:flex;flex-direction:column;gap:3px}
+.sub-row{display:flex;align-items:center;gap:4px;font-size:.71rem;color:var(--gray-500)}
+.sub-row input{width:38px;padding:2px 4px;border:1px solid var(--gray-200);border-radius:4px;font-size:.71rem;text-align:center}
+.chk-wrap{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px}
+.chk-wrap label{display:flex;align-items:center;gap:3px;font-size:.73rem;color:var(--gray-600);cursor:pointer;white-space:nowrap}
+.chk-wrap input[type=checkbox]{accent-color:var(--ra);width:13px;height:13px}
+
+/* ── SCHEDULE ── */
+.sched-wrap{overflow-x:auto}
+.sct{width:100%;border-collapse:collapse;min-width:400px}
+.sct th{padding:6px 10px;font-size:.68rem;font-weight:700;color:var(--gray-500);background:var(--gray-50);text-align:left;border-bottom:1.5px solid var(--gray-200)}
+.sct td{border-bottom:1px solid var(--gray-100);vertical-align:top}
+.sct tr:last-child td{border-bottom:none}
+.t-slot{padding:9px 8px;font-size:.74rem;font-weight:700;color:var(--rp);white-space:nowrap;width:90px;background:var(--rlt);border-right:2px solid var(--gray-200)}
+.t-slot.brk{background:#f8fafc;color:var(--gray-400);font-style:italic;font-weight:400}
+.t-slot.gold{background:var(--amber-lt);color:var(--amber);border-right-color:#fbbf24}
+.t-slot.bus{background:#fdf2f8;color:#9d174d;font-size:.7rem}
+.t-def{padding:8px 10px;font-size:.75rem;color:var(--gray-400);font-style:italic;width:36%;border-right:1px solid var(--gray-100)}
+.t-act textarea{width:100%;padding:7px 10px;border:none;font-size:.82rem;color:var(--gray-800);resize:none;min-height:48px;background:transparent;outline:none;line-height:1.5;display:block}
+.t-act textarea:focus{background:var(--rlt)}
+
+/* ── NOTES ── */
+.note-blk{padding:11px 14px;border-bottom:1px solid var(--gray-100)}
+.note-blk:last-child{border-bottom:none}
+.note-prompt{font-size:.74rem;color:var(--gray-500);font-style:italic;margin-bottom:5px}
+.note-blk textarea{width:100%;padding:8px 10px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:.84rem;color:var(--gray-800);resize:vertical;min-height:58px;line-height:1.5;background:var(--white);transition:border .15s}
+.note-blk textarea:focus{outline:none;border-color:var(--ra);background:var(--rlt)}
+
+/* ── SETTINGS MODAL ── */
+.modal-ov{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:500;display:flex;align-items:flex-end;justify-content:center;padding:0;opacity:0;pointer-events:none;transition:opacity .25s}
+.modal-ov.open{opacity:1;pointer-events:all}
+.modal-box{background:#fff;border-radius:16px 16px 0 0;padding:24px 20px 32px;width:100%;max-width:560px;transform:translateY(40px);transition:transform .25s;max-height:90vh;overflow-y:auto}
+.modal-ov.open .modal-box{transform:translateY(0)}
+.modal-box h3{font-size:1rem;font-weight:700;color:var(--gray-800);margin-bottom:4px}
+.modal-box p{font-size:.8rem;color:var(--gray-500);margin-bottom:16px;line-height:1.6}
+.modal-box .step{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.modal-box .step-num{width:22px;height:22px;border-radius:50%;background:var(--blue-pale);color:var(--blue-dark);font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.modal-box .step p{margin:0;font-size:.8rem;color:var(--gray-600)}
+.modal-box .step code{background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:.75rem;color:var(--gray-800);font-family:monospace;word-break:break-all}
+.modal-input{width:100%;padding:9px 11px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:.84rem;color:var(--gray-800);margin:12px 0 4px;transition:border .15s}
+.modal-input:focus{outline:none;border-color:var(--blue-mid)}
+.modal-actions{display:flex;gap:8px;margin-top:14px}
+.modal-save{flex:1;padding:11px;background:var(--blue-dark);color:#fff;border:none;border-radius:var(--radius);font-size:.88rem;font-weight:700;cursor:pointer}
+.modal-cancel{padding:11px 16px;background:var(--gray-100);color:var(--gray-600);border:none;border-radius:var(--radius);font-size:.88rem;font-weight:600;cursor:pointer}
+.gs-status{display:flex;align-items:center;gap:6px;font-size:.75rem;margin-top:6px}
+.gs-dot{width:8px;height:8px;border-radius:50%}
+
+/* ── BOTTOM BAR ── */
+.btm{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid var(--gray-200);padding:8px 14px;display:flex;gap:8px;box-shadow:0 -2px 10px rgba(0,0,0,.07);z-index:100}
+.btn-rst{padding:10px 14px;background:var(--gray-100);color:var(--gray-600);border:none;border-radius:var(--radius);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .18s;white-space:nowrap}
+.btn-rst:hover{background:var(--gray-200)}
+.btn-print{padding:10px 14px;background:var(--white);color:var(--rp);border:1.5px solid var(--rp);border-radius:var(--radius);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .18s;white-space:nowrap;display:flex;align-items:center;gap:5px}
+.btn-print:hover{background:var(--rlt)}
+.btn-sub{flex:1;padding:10px;background:var(--rp);color:#fff;border:none;border-radius:var(--radius);font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-cfg{padding:10px 12px;background:var(--gray-100);color:var(--gray-600);border:none;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0}
+.btn-cfg:hover{background:var(--gray-200);color:var(--rp)}
+.btn-sub:active{transform:scale(.98)}
+.toast{position:fixed;bottom:66px;left:50%;transform:translateX(-50%) translateY(12px);background:#1e293b;color:#fff;padding:8px 18px;border-radius:20px;font-size:.8rem;font-weight:500;opacity:0;transition:all .28s;pointer-events:none;z-index:300;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:#fff!important;padding-bottom:0;margin:0;font-size:9pt}
+  .hd,.btm,.toast,.modal-ov,.info-bar{display:none!important}
+  /* Chỉ hiện page được JS đánh dấu là print-active, ẩn hết còn lại */
+  .page{display:none!important}
+  .page.print-active{display:block!important}
+  .main{max-width:100%!important;padding:0!important;margin:0!important}
+  #print-hdr{display:block!important;margin-bottom:10px}
+  /* Sections */
+  .sec{box-shadow:none!important;border:1px solid #ddd!important;margin-bottom:6px!important;page-break-inside:avoid;break-inside:avoid}
+  .sec-hd{padding:6px 10px!important}
+  .sec-hd h2{font-size:8pt!important}
+  .grp{padding:4px 10px!important;font-size:7pt!important}
+  /* Tables */
+  .kt th{font-size:7pt!important;padding:4px 5px!important}
+  .kt td{padding:4px 5px!important;font-size:8pt!important}
+  .l-cell{font-size:7.5pt!important}
+  .n-cell{width:48px!important}
+  .n-cell input,.t-cell input{width:100%!important;padding:3px!important;border:1px solid #ccc!important;background:#fff!important;font-size:8pt!important;min-height:16px!important}
+  .t-cell input{background:#e8f5e9!important}
+  .g-cell input,.g-cell textarea{border:1px solid #ccc!important;background:#fff!important;font-size:7.5pt!important;min-height:16px!important;padding:3px 5px!important}
+  /* Schedule */
+  .sct th{font-size:7pt!important;padding:4px 6px!important}
+  .t-slot{font-size:7pt!important;padding:5px 6px!important;width:72px!important}
+  .t-def{font-size:7pt!important;padding:5px 6px!important}
+  .t-act textarea{font-size:7.5pt!important;min-height:28px!important;padding:4px 6px!important;border:none!important;border-left:1px solid #eee!important}
+  /* Notes */
+  .note-blk{padding:6px 10px!important}
+  .note-prompt{font-size:7.5pt!important}
+  .note-blk textarea{min-height:36px!important;font-size:8pt!important;border:1px solid #ccc!important;background:#fff!important}
+  /* Checkboxes */
+  .chk-wrap label{font-size:7.5pt!important}
+  .sub-inputs{gap:2px!important}
+  .sub-row{font-size:7pt!important}
+  @page{margin:8mm 8mm;size:A4}
+}
+
+/* ── PAGE ANIM ── */
+.page{display:none;animation:fi .2s ease}
+.page.active{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:520px){
+  .info-row.row3{grid-template-columns:1fr 1fr}
+  .kt th:nth-child(3),.kt td:nth-child(3){display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hd">
+  <div class="hd-top">
+    <div class="hd-logo">
+      <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+    </div>
+    <div class="hd-info">
+      <h1>BÁO CÁO CÔNG VIỆC HÀNG NGÀY</h1>
+      <p id="hd-sub">Tuyển Sinh – Nộp trước 17:00 / 17:30</p>
+    </div>
+    <div class="hd-actions"></div>
+  </div>
+  <div class="tab-bar">
+    <button class="tab-btn active tab-tv" onclick="switchTab('tv',this)">TƯ VẤN TUYỂN SINH</button>
+    <button class="tab-btn tab-admin" onclick="switchTab('admin',this)">ADMIN TUYỂN SINH</button>
+  </div>
+</div>
+
+<!-- ══ TV PAGE ══ -->
+<div class="page active" id="pg-tv">
+<div class="main">
+
+  <!-- INFO BAR -->
+  <div class="info-bar" style="margin-top:14px">
+    <div class="info-row" style="margin-bottom:10px">
+      <div class="f"><label class="fl">Cơ sở làm việc</label>
+        <select class="fi" id="tv-cs" onchange="onCs('tv')">
+          <option value="">-- Chọn cơ sở --</option>
+          <optgroup label="WASS">
+            <option value="w1">WASS – 43 Nguyễn Thông</option>
+            <option value="w2">WASS – 84 Bà Huyện Thanh Quan</option>
+            <option value="w3">WASS – 157 Lý Chính Thắng</option>
+          </optgroup>
+          <optgroup label="PennSchool">
+            <option value="p1">PENN – 240 Trần Bình Trọng</option>
+            <option value="p2">PENN – 10 Ba Tháng Hai</option>
+          </optgroup>
+          <optgroup label="SISS">
+            <option value="s1">SISS – 125 Trần Quốc Thảo</option>
+          </optgroup>
+          <optgroup label="Mầm non">
+            <option value="m1">Mầm non – 4 Nguyễn Thông</option>
+            <option value="m2">Mầm non – 35 Nguyễn Hữu Cảnh</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="f"><label class="fl">Ca làm việc</label>
+        <div class="ca-wrap">
+          <label class="ca-opt"><input type="radio" name="tv-ca" value="c1" onchange="onCa('tv')"><span class="ca-lbl">Ca 1<small>7:00 – 17:00</small></span></label>
+          <label class="ca-opt"><input type="radio" name="tv-ca" value="c2" onchange="onCa('tv')"><span class="ca-lbl">Ca 2<small>7:30 – 17:30</small></span></label>
+        </div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="f"><label class="fl">Họ và tên</label><input class="fi" type="text" id="tv-name" placeholder="Nhập họ và tên..."></div>
+      <div class="f"><label class="fl">Ngày báo cáo</label><input class="fi" type="date" id="tv-date"></div>
+    </div>
+  </div>
+
+  <!-- A: KPI -->
+  <div class="sec">
+    <div class="sec-hd"><h2>A. KPI TELESALE &amp; TIẾP CẬN LEADS</h2></div>
+    <div class="sec-bd">
+      <div class="grp grp-blue">📋 LEADS MỚI (MKT chia về trong ngày)</div>
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td class="s-cell">1</td><td class="l-cell">Số leads mới được chia trong ngày</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA1')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA1')"></td><td class="t-cell"><input id="tvA1-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">2</td><td class="l-cell">Số cuộc gọi thực hiện cho leads mới</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA2')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA2')"></td><td class="t-cell"><input id="tvA2-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">3</td><td class="l-cell">Số PH nghe máy (leads mới)</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA3')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA3')"></td><td class="t-cell"><input id="tvA3-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">4</td><td class="l-cell">Số PH quan tâm – hẹn tư vấn thêm / gửi Zalo</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA4')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA4')"></td><td class="t-cell"><input id="tvA4-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">5</td><td class="l-cell">Số gia đình hẹn tham quan trường trong ngày</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA5')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA5')"></td><td class="t-cell"><input id="tvA5-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+      </tbody></table>
+
+      <div class="grp grp-green">📋 DATA CŨ (follow-up CRM task)</div>
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td class="s-cell">6</td><td class="l-cell">Số cuộc gọi / tin nhắn chăm sóc data cũ</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA6')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA6')"></td><td class="t-cell"><input id="tvA6-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">7</td><td class="l-cell">Số leads chuyển sang Opportunity (qualified)</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA7')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA7')"></td><td class="t-cell"><input id="tvA7-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+      </tbody></table>
+
+      <div class="grp grp-gray">📋 DATA QUÉT (booth / trường khác / tổng hợp)</div>
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td class="s-cell">8</td><td class="l-cell">Số cuộc gọi data quét</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA8')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA8')"></td><td class="t-cell"><input id="tvA8-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">9</td><td class="l-cell">Số PH nghe máy (data quét)</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA9')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA9')"></td><td class="t-cell"><input id="tvA9-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- B: CASE -->
+  <div class="sec">
+    <div class="sec-hd"><h2>B. TIẾP NHẬN &amp; XỬ LÝ CASE PHẢN HỒI PHHS</h2><span class="note">Zalo · ĐT · Trực tiếp · SPS360 · Email</span></div>
+    <div class="sec-bd">
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td class="s-cell">10</td><td class="l-cell">Số case PHHS tiếp nhận trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB10')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB10')"></td><td class="t-cell"><input id="tvB10-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+
+        <tr><td class="s-cell">11</td><td class="l-cell">Số case đã xử lý xong trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB11')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB11')"></td><td class="t-cell"><input id="tvB11-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">12</td><td class="l-cell">Số case đang chờ phối hợp bộ phận khác</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB12')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB12')"></td><td class="t-cell"><input id="tvB12-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Tên bộ phận..."></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- C: HỒ SƠ -->
+  <div class="sec">
+    <div class="sec-hd"><h2>C. HỒ SƠ HỌC SINH &amp; VẬN HÀNH CƠ SỞ</h2></div>
+    <div class="sec-bd">
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td class="s-cell">13</td><td class="l-cell">Hồ sơ mới tiếp nhận / hoàn thiện trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvC13')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvC13')"></td><td class="t-cell"><input id="tvC13-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">14</td><td class="l-cell">Sự cố vận hành cơ sở phát sinh trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvC14')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvC14')"></td><td class="t-cell"><input id="tvC14-t" readonly placeholder="—"></td>
+          <td class="g-cell"><div style="font-size:.7rem;color:var(--gray-500);margin-bottom:3px">Đã báo bộ phận:</div><div class="chk-wrap"><label><input type="checkbox"> IT</label><label><input type="checkbox"> Vận hành</label><label><input type="checkbox"> BGH</label></div></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- D: LỊCH -->
+  <div class="sec">
+    <div class="sec-hd"><h2>D. NHẬT KÝ HOẠT ĐỘNG THEO KHUNG GIỜ</h2><span class="note" id="tv-sched-note">⭐ 9:00–11:00 &amp; 14:00–16:00</span></div>
+    <div class="sec-bd sched-wrap">
+      <table class="sct"><thead><tr><th style="width:90px">Khung giờ</th><th style="width:36%">Công việc gợi ý</th><th>Thực tế đã làm &amp; kết quả</th></tr></thead>
+      <tbody id="tv-sched"></tbody></table>
+    </div>
+  </div>
+
+  <!-- E: GHI CHÚ -->
+  <div class="sec">
+    <div class="sec-hd"><h2>E. GHI CHÚ &amp; CÔNG VIỆC TIẾP THEO</h2></div>
+    <div class="sec-bd">
+      <div class="note-blk"><div class="note-prompt">Leads / khách cần follow-up hôm sau (tên + SĐT + việc cần làm):</div><textarea placeholder=""></textarea></div>
+      <div class="note-blk"><div class="note-prompt">Khó khăn / vướng mắc trong ca (case tồn, lỗi hệ thống, thiếu thông tin...):</div><textarea placeholder=""></textarea></div>
+      <div class="note-blk"><div class="note-prompt">Đề xuất lên Trưởng phòng (nếu có):</div><textarea placeholder=""></textarea></div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /pg-tv -->
+
+<!-- ══ ADMIN PAGE ══ -->
+<div class="page" id="pg-admin">
+<div class="main">
+
+  <div class="info-bar" style="margin-top:14px">
+    <div class="info-row" style="margin-bottom:10px">
+      <div class="f"><label class="fl">Cơ sở làm việc</label>
+        <select class="fi" id="ad-cs" onchange="onCs('ad')">
+          <option value="">-- Chọn cơ sở --</option>
+          <optgroup label="WASS"><option value="w1">WASS – 43 Nguyễn Thông</option><option value="w2">WASS – 84 Bà Huyện Thanh Quan</option><option value="w3">WASS – 157 Lý Chính Thắng</option></optgroup>
+          <optgroup label="PennSchool"><option value="p1">PENN – 240 Trần Bình Trọng</option><option value="p2">PENN – 10 Ba Tháng Hai</option></optgroup>
+          <optgroup label="SISS"><option value="s1">SISS – 125 Trần Quốc Thảo</option></optgroup>
+          <optgroup label="Mầm non"><option value="m1">Mầm non – 4 Nguyễn Thông</option><option value="m2">Mầm non – 35 Nguyễn Hữu Cảnh</option></optgroup>
+        </select>
+      </div>
+      <div class="f"><label class="fl">Ca làm việc</label>
+        <div class="ca-wrap">
+          <label class="ca-opt"><input type="radio" name="ad-ca" value="c1" onchange="onCa('ad')"><span class="ca-lbl">Ca 1<small>7:00 – 17:00</small></span></label>
+          <label class="ca-opt"><input type="radio" name="ad-ca" value="c2" onchange="onCa('ad')"><span class="ca-lbl">Ca 2<small>7:30 – 17:30</small></span></label>
+        </div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="f"><label class="fl">Họ và tên</label><input class="fi" type="text" id="ad-name" placeholder="Nhập họ và tên..."></div>
+      <div class="f"><label class="fl">Ngày báo cáo</label><input class="fi" type="date" id="ad-date"></div>
+    </div>
+  </div>
+
+  <!-- A -->
+  <div class="sec">
+    <div class="sec-hd"><h2>A. TIẾP NHẬN HOTLINE, FANPAGE &amp; CRM</h2></div>
+    <div class="sec-bd">
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td class="s-cell">1</td><td class="l-cell">Số PH phản hồi qua Hotline (nghe máy, nhắn lại)</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA1')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA1')"></td><td class="t-cell"><input id="adA1-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">2</td><td class="l-cell">Số tin nhắn Fanpage / Zalo đã phản hồi</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA2')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA2')"></td><td class="t-cell"><input id="adA2-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">3</td><td class="l-cell">Số thông tin PH/HS nhập vào CRM trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA3')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA3')"></td><td class="t-cell"><input id="adA3-t" readonly placeholder="—"></td>
+          <td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- B -->
+  <div class="sec">
+    <div class="sec-hd"><h2>B. CASE PHẢN HỒI PHHS</h2><span class="note">Nghỉ phép · Học phí · Phản ánh · Hỏi TT</span></div>
+    <div class="sec-bd">
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td class="s-cell">4</td><td class="l-cell">Số case PHHS tiếp nhận trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB4')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB4')"></td><td class="t-cell"><input id="adB4-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+
+        <tr><td class="s-cell">5</td><td class="l-cell">Số case xử lý xong trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB5')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB5')"></td><td class="t-cell"><input id="adB5-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">6</td><td class="l-cell">Số case chuyển phối hợp bộ phận khác</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB6')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB6')"></td><td class="t-cell"><input id="adB6-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Tên bộ phận..."></td></tr>
+        <tr><td class="s-cell">7</td><td class="l-cell">Số case tồn đọng chuyển sang ngày hôm sau</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB7')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB7')"></td><td class="t-cell"><input id="adB7-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Lý do tồn đọng..."></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- C -->
+  <div class="sec">
+    <div class="sec-hd"><h2>C. HỒ SƠ HỌC SINH &amp; VẬN HÀNH CƠ SỞ</h2></div>
+    <div class="sec-bd">
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><td class="s-cell">8</td><td class="l-cell">Hồ sơ mới tiếp nhận / hoàn thiện trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC8')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC8')"></td><td class="t-cell"><input id="adC8-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">9</td><td class="l-cell">Số HS Entrance Test được xử lý / xác nhận</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC9')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC9')"></td><td class="t-cell"><input id="adC9-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">10</td><td class="l-cell">Sự cố vận hành cơ sở phát sinh trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC10')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC10')"></td><td class="t-cell"><input id="adC10-t" readonly placeholder="—"></td>
+          <td class="g-cell"><div style="font-size:.7rem;color:var(--gray-500);margin-bottom:3px">Đã báo bộ phận:</div><div class="chk-wrap"><label><input type="checkbox"> IT</label><label><input type="checkbox"> Vận hành</label><label><input type="checkbox"> BGH</label></div></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- D -->
+  <div class="sec">
+    <div class="sec-hd"><h2>D. NHẬT KÝ HOẠT ĐỘNG THEO KHUNG GIỜ</h2><span class="note" id="ad-sched-note">⭐ 9:00–11:00 &amp; 14:00–16:00</span></div>
+    <div class="sec-bd sched-wrap">
+      <table class="sct"><thead><tr><th style="width:90px">Khung giờ</th><th style="width:36%">Công việc mặc định</th><th>Thực tế đã làm &amp; kết quả</th></tr></thead>
+      <tbody id="ad-sched"></tbody></table>
+    </div>
+  </div>
+
+  <!-- E -->
+  <div class="sec">
+    <div class="sec-hd"><h2>E. GHI CHÚ &amp; BÀN GIAO</h2></div>
+    <div class="sec-bd">
+      <div class="note-blk"><div class="note-prompt">Hồ sơ / case tồn đọng cần xử lý ngày mai (tên HS + lý do):</div><textarea placeholder=""></textarea></div>
+      <div class="note-blk"><div class="note-prompt">Sự cố hệ thống / lỗi phần mềm trong ca (CRM, SPS360, Odoo...):</div><textarea placeholder=""></textarea></div>
+      <div class="note-blk"><div class="note-prompt">Đề xuất / cải tiến quy trình lên Trưởng phòng (nếu có):</div><textarea placeholder=""></textarea></div>
+    </div>
+  </div>
+
+</div></div><!-- /pg-admin -->
+
+<!-- SETTINGS MODAL -->
+<div class="modal-ov" id="settings-modal">
+  <div class="modal-box">
+    <h3>⚙️ Kết nối Google Sheets theo trường</h3>
+    <p>Mỗi trường có 1 file Google Sheets riêng. Dán URL Apps Script tương ứng vào từng ô bên dưới.</p>
+
+    <div class="step"><div class="step-num">1</div><div><p>Tạo file Google Sheets cho từng trường → <strong>Extensions → Apps Script</strong> → dán code từ file <code>apps-script.js</code></p></div></div>
+    <div class="step"><div class="step-num">2</div><div><p><strong>Deploy → New deployment → Web app</strong> · Execute as: <em>Me</em> · Who has access: <em>Anyone</em> → Copy URL</p></div></div>
+    <div class="step"><div class="step-num">3</div><div><p>Dán URL vào đúng ô trường bên dưới → nhấn <strong>Lưu</strong>. Ô nào chưa có URL thì báo cáo sẽ sao chép vào clipboard.</p></div></div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+      <div>
+        <label style="font-size:.7rem;font-weight:700;color:#1e3a8a;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px">
+          <span style="background:#1e3a8a;color:#fff;border-radius:4px;padding:1px 7px;font-size:.68rem">WASS</span> URL Apps Script
+        </label>
+        <input class="modal-input" id="url-wass" type="url" placeholder="https://script.google.com/macros/s/..." style="margin-top:5px;margin-bottom:0">
+      </div>
+      <div>
+        <label style="font-size:.7rem;font-weight:700;color:#7c2d12;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px">
+          <span style="background:#c2410c;color:#fff;border-radius:4px;padding:1px 7px;font-size:.68rem">PENN</span> URL Apps Script
+        </label>
+        <input class="modal-input" id="url-penn" type="url" placeholder="https://script.google.com/macros/s/..." style="margin-top:5px;margin-bottom:0">
+      </div>
+      <div>
+        <label style="font-size:.7rem;font-weight:700;color:#065f46;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px">
+          <span style="background:#065f46;color:#fff;border-radius:4px;padding:1px 7px;font-size:.68rem">SISS</span> URL Apps Script
+        </label>
+        <input class="modal-input" id="url-siss" type="url" placeholder="https://script.google.com/macros/s/..." style="margin-top:5px;margin-bottom:0">
+      </div>
+      <div>
+        <label style="font-size:.7rem;font-weight:700;color:#6b21a8;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px">
+          <span style="background:#6b21a8;color:#fff;border-radius:4px;padding:1px 7px;font-size:.68rem">MẦM NON</span> URL Apps Script
+        </label>
+        <input class="modal-input" id="url-mn" type="url" placeholder="https://script.google.com/macros/s/..." style="margin-top:5px;margin-bottom:0">
+      </div>
+    </div>
+
+    <div id="gs-status" style="margin-top:10px;display:flex;flex-direction:column;gap:4px"></div>
+
+    <div style="background:#fffbeb;border:1px solid #fbbf24;border-radius:8px;padding:10px 12px;margin-top:12px;font-size:.75rem;color:#92400e;line-height:1.6">
+      <strong>💡 Chưa có URL?</strong> Form vẫn hoạt động bình thường — nhấn "Nộp Báo Cáo" sẽ tự sao chép nội dung để dán vào Zalo/Email.
+    </div>
+
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="document.getElementById('settings-modal').classList.remove('open')">Đóng</button>
+      <button class="modal-save" onclick="saveSettings()">Lưu cài đặt</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM -->
+<div class="btm">
+  <button class="btn-rst" onclick="resetForm()">↺ Reset</button>
+  <button class="btn-print" onclick="printForm()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    In / Save PDF
+  </button>
+  <button class="btn-sub" onclick="submitForm()">✓ Nộp Báo Cáo</button>
+  <button class="btn-cfg" onclick="openSettings()" title="Cài đặt kết nối Google Sheets">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+  </button>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── LỊCH ────────────────────────────────────────────────────────────────────
+// isPenn: true = PennSchool, false = WASS/SISS/Mầm non
+// ca: 'c1' | 'c2'
+// role: 'tv' | 'ad'
+const SCHED = {
+  wass:{
+    tv:{
+      c1:[
+        {t:'7:00 – 8:45',  c:'',    d:'Vào ca, đón học sinh, xử lý phát sinh, điểm danh lớp'},
+        {t:'8:45 – 9:00',  c:'',    d:'Kiểm tra lead mới, chuẩn bị list gọi trong ngày'},
+        {t:'9:00 – 11:00', c:'gold',d:'⭐ Telesale leads mới & follow-up data cũ'},
+        {t:'11:00 – 12:00',c:'',    d:'Xử lý case PHHS, cập nhật CRM, hồ sơ học sinh'},
+        {t:'12:00 – 13:30',c:'brk', d:'Nghỉ trưa'},
+        {t:'13:30 – 14:00',c:'',    d:'Xử lý case, hồ sơ, Zalo PH'},
+        {t:'14:00 – 15:50',c:'gold',d:'⭐ Telesale leads mới & follow-up data cũ'},
+        {t:'15:50 – 17:00',c:'bus', d:'🚌 Trả học sinh – xử lý case phát sinh. Mưa → đến 17:30'},
+        {t:'17:00 – 17:30',c:'',    d:'Cập nhật CRM, tổng hợp báo cáo'},
+        {t:'Phát sinh',    c:'',    d:''},
+      ],
+      c2:[
+        {t:'7:30 – 8:45',  c:'',    d:'Vào ca, đón học sinh, xử lý phát sinh, điểm danh lớp'},
+        {t:'8:45 – 9:00',  c:'',    d:'Kiểm tra lead mới, chuẩn bị list gọi trong ngày'},
+        {t:'9:00 – 11:00', c:'gold',d:'⭐ Telesale leads mới & follow-up data cũ'},
+        {t:'11:00 – 12:00',c:'',    d:'Xử lý case PHHS, cập nhật CRM, hồ sơ học sinh'},
+        {t:'12:00 – 13:30',c:'brk', d:'Nghỉ trưa'},
+        {t:'13:30 – 14:00',c:'',    d:'Xử lý case, hồ sơ, Zalo PH'},
+        {t:'14:00 – 15:50',c:'gold',d:'⭐ Telesale leads mới & follow-up data cũ'},
+        {t:'15:50 – 17:00',c:'bus', d:'🚌 Trả học sinh. Mưa → đến 17:30'},
+        {t:'17:00 – 17:30',c:'',    d:'Cập nhật CRM, tổng hợp báo cáo'},
+        {t:'Phát sinh',    c:'',    d:''},
+      ]
+    },
+    ad:{
+      c1:[
+        {t:'7:00 – 8:30',  c:'',    d:'Vào ca, đón học sinh, kiểm tra Hotline/Fanpage'},
+        {t:'8:30 – 9:00',  c:'',    d:'Tiếp nhận xử lý Hotline/Fanpage, chia Leads'},
+        {t:'9:00 – 12:00', c:'gold',d:'⭐ Xử lý case PHHS, nhập CRM, hồ sơ ưu tiên'},
+        {t:'12:00 – 13:30',c:'brk', d:'Nghỉ trưa'},
+        {t:'13:30 – 14:00',c:'',    d:'Xử lý Fanpage, Zalo, hồ sơ buổi chiều'},
+        {t:'14:00 – 16:00',c:'gold',d:'⭐ Xử lý case, Entrance Test, hồ sơ học sinh'},
+        {t:'15:50 – 17:00',c:'bus', d:'🚌 Trả học sinh. Mưa → đến 17:30'},
+        {t:'17:00 – 17:30',c:'',    d:'Tổng hợp báo cáo, cập nhật tồn đọng'},
+        {t:'Phát sinh',    c:'',    d:''},
+      ],
+      c2:[
+        {t:'7:30 – 8:30',  c:'',    d:'Vào ca, đón học sinh, kiểm tra Hotline/Fanpage'},
+        {t:'8:30 – 9:00',  c:'',    d:'Tiếp nhận xử lý Hotline/Fanpage, chia Leads'},
+        {t:'9:00 – 12:00', c:'gold',d:'⭐ Xử lý case PHHS, nhập CRM, hồ sơ ưu tiên'},
+        {t:'12:00 – 13:30',c:'brk', d:'Nghỉ trưa'},
+        {t:'13:30 – 14:00',c:'',    d:'Xử lý Fanpage, Zalo, hồ sơ buổi chiều'},
+        {t:'14:00 – 16:00',c:'gold',d:'⭐ Xử lý case, Entrance Test, hồ sơ học sinh'},
+        {t:'15:50 – 17:00',c:'bus', d:'🚌 Trả học sinh. Mưa → đến 17:30'},
+        {t:'17:00 – 17:30',c:'',    d:'Tổng hợp báo cáo, cập nhật tồn đọng'},
+        {t:'Phát sinh',    c:'',    d:''},
+      ]
+    }
+  },
+  penn:{
+    tv:{
+      c1:[
+        {t:'7:00 – 8:30',      c:'',    d:'Vào ca, đón học sinh, xử lý phát sinh, điểm danh lớp'},
+        {t:'8:30 – 9:00',      c:'',    d:'Kiểm tra lead mới, chuẩn bị list gọi, kiểm tra CSVC (nếu có)'},
+        {t:'9:00 – 11:00',     c:'gold',d:'⭐ Telesale leads mới & follow-up data cũ'},
+        {t:'11:00 – 11:30',    c:'',    d:'Xử lý case PHHS, cập nhật CRM, hồ sơ, kiểm tra CSVC'},
+        {t:'Ca 1: 11:00–12:30',c:'brk', d:'Nghỉ trưa (điều chỉnh theo ca thực tế tại cơ sở)'},
+        {t:'13:30 – 14:00',    c:'',    d:'Xử lý case, hồ sơ, Zalo PH, kiểm tra CSVC'},
+        {t:'14:00 – 16:20',    c:'gold',d:'⭐ Telesale leads mới & follow-up data cũ'},
+        {t:'Ca 1: 15:10–15:50',c:'bus', d:'🚌 Ca 1: Trả học sinh – xử lý case phát sinh. Mưa → 17:30'},
+        {t:'17:00 – 17:30',    c:'',    d:'Cập nhật CRM, tổng hợp báo cáo'},
+        {t:'Phát sinh',        c:'',    d:''},
+      ],
+      c2:[
+        {t:'7:30 – 8:30',      c:'',    d:'Vào ca, đón học sinh, xử lý phát sinh, điểm danh lớp'},
+        {t:'8:30 – 9:00',      c:'',    d:'Kiểm tra lead mới, chuẩn bị list gọi trong ngày'},
+        {t:'9:00 – 11:00',     c:'gold',d:'⭐ Telesale leads mới & follow-up data cũ'},
+        {t:'11:00 – 12:00',    c:'',    d:'Xử lý case PHHS, cập nhật CRM, hồ sơ học sinh'},
+        {t:'Ca 2: 12:00–13:30',c:'brk', d:'Nghỉ trưa (điều chỉnh theo ca thực tế tại cơ sở)'},
+        {t:'13:30 – 14:00',    c:'',    d:'Xử lý case, hồ sơ, Zalo PH'},
+        {t:'14:00 – 16:20',    c:'gold',d:'⭐ Telesale leads mới & follow-up data cũ'},
+        {t:'Ca 2: 16:20–17:00',c:'bus', d:'🚌 Ca 2: Trả học sinh. Mưa → đến 17:30'},
+        {t:'17:00 – 17:30',    c:'',    d:'Cập nhật CRM, tổng hợp báo cáo'},
+        {t:'Phát sinh',        c:'',    d:''},
+      ]
+    },
+    ad:{
+      c1:[
+        {t:'7:00 – 8:30',      c:'',    d:'Vào ca, đón học sinh, kiểm tra Hotline/Fanpage'},
+        {t:'8:30 – 9:00',      c:'',    d:'Tiếp nhận Hotline/Fanpage, chia Leads'},
+        {t:'9:00 – 11:00',     c:'gold',d:'⭐ Xử lý case PHHS, nhập CRM, hồ sơ, kiểm tra CSVC'},
+        {t:'Ca 1: 11:00–12:30',c:'brk', d:'Nghỉ trưa (điều chỉnh theo ca thực tế tại cơ sở)'},
+        {t:'13:30 – 14:00',    c:'',    d:'Xử lý Fanpage, Zalo, hồ sơ, kiểm tra CSVC'},
+        {t:'14:00 – 15:10',    c:'gold',d:'⭐ Xử lý case, Entrance Test, hồ sơ học sinh'},
+        {t:'Ca 1: 15:10–15:50',c:'bus', d:'🚌 Ca 1: Trả học sinh. Mưa → đến 17:30'},
+        {t:'16:00 – 17:00',    c:'',    d:'Tổng hợp báo cáo, cập nhật tồn đọng'},
+        {t:'Phát sinh',        c:'',    d:''},
+      ],
+      c2:[
+        {t:'7:30 – 8:30',      c:'',    d:'Vào ca, đón học sinh, kiểm tra Hotline/Fanpage'},
+        {t:'8:30 – 9:00',      c:'',    d:'Tiếp nhận Hotline/Fanpage, chia Leads'},
+        {t:'9:00 – 12:00',     c:'gold',d:'⭐ Xử lý case PHHS, nhập CRM, hồ sơ ưu tiên'},
+        {t:'Ca 2: 12:00–13:30',c:'brk', d:'Nghỉ trưa (điều chỉnh theo ca thực tế tại cơ sở)'},
+        {t:'13:30 – 14:00',    c:'',    d:'Xử lý Fanpage, Zalo, hồ sơ buổi chiều'},
+        {t:'14:00 – 16:20',    c:'gold',d:'⭐ Xử lý case, Entrance Test, hồ sơ học sinh'},
+        {t:'Ca 2: 16:20–17:00',c:'bus', d:'🚌 Ca 2: Trả học sinh. Mưa → đến 17:30'},
+        {t:'17:00 – 17:30',    c:'',    d:'Tổng hợp báo cáo, cập nhật tồn đọng'},
+        {t:'Phát sinh',        c:'',    d:''},
+      ]
+    }
+  }
+};
+
+// ── GOOGLE SHEETS CONFIG ─────────────────────────────────────────────────────
+// Mỗi trường có 1 URL Apps Script riêng, lưu trong localStorage
+function getUrlForSchool(csValue) {
+  if (!csValue) return localStorage.getItem('gs_url_wass') || '';
+  if (csValue.startsWith('p'))  return localStorage.getItem('gs_url_penn') || '';
+  if (csValue.startsWith('s'))  return localStorage.getItem('gs_url_siss') || '';
+  if (csValue.startsWith('m'))  return localStorage.getItem('gs_url_mn')   || '';
+  return localStorage.getItem('gs_url_wass') || ''; // w1,w2,w3 → WASS
+}
+// Giữ biến cũ để tương thích với settings modal đơn giản
+let APPS_SCRIPT_URL = localStorage.getItem('gs_url') || '';
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+let role = 'tv';
+const isPenn = v => v && v.startsWith('p');
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('tv-date').value = today;
+  document.getElementById('ad-date').value = today;
+  renderSched('tv');
+  renderSched('ad');
+});
+
+// ── TABS ─────────────────────────────────────────────────────────────────────
+function switchTab(r, btn) {
+  role = r;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('pg-' + r).classList.add('active');
+  document.body.classList.toggle('role-admin', r === 'admin');
+}
+
+// ── CO SO / CA CHANGE ────────────────────────────────────────────────────────
+function onCs(r) { renderSched(r === 'tv' ? 'tv' : 'ad'); }
+function onCa(r) { renderSched(r === 'tv' ? 'tv' : 'ad'); }
+
+function getSchoolAndCa(r) {
+  const prefix = r === 'tv' ? 'tv' : 'ad';
+  const cs = document.getElementById(prefix + '-cs').value;
+  const caEl = document.querySelector(`input[name="${prefix}-ca"]:checked`);
+  const ca = caEl ? caEl.value : 'c1';
+  const school = isPenn(cs) ? 'penn' : 'wass';
+  return { school, ca };
+}
+
+// ── RENDER SCHEDULE ──────────────────────────────────────────────────────────
+function renderSched(r) {
+  const tbId = r + '-sched';
+  const tb = document.getElementById(tbId);
+  if (!tb) return;
+  const { school, ca } = getSchoolAndCa(r);
+  const roleKey = r === 'tv' ? 'tv' : 'ad';
+  const rows = SCHED[school][roleKey][ca] || [];
+  tb.innerHTML = rows.map(row => `
+    <tr>
+      <td class="t-slot ${row.c}">${row.t}</td>
+      <td class="t-def">${row.d}</td>
+      <td class="t-act"><textarea rows="2" placeholder="Ghi kết quả thực tế..."></textarea></td>
+    </tr>
+  `).join('');
+}
+
+// ── CALC TOTAL ───────────────────────────────────────────────────────────────
+function calc(inp, id) {
+  const tr = inp.closest('tr');
+  const nums = tr.querySelectorAll('td.n-cell input');
+  let s = 0; nums.forEach(n => s += parseInt(n.value) || 0);
+  const t = document.getElementById(id + '-t');
+  if (t) t.value = s > 0 ? s : '';
+}
+
+// ── TOAST ────────────────────────────────────────────────────────────────────
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2600);
+}
+
+// ── PRINT / PDF ──────────────────────────────────────────────────────────────
+function printForm() {
+  const prefix    = role === 'tv' ? 'tv' : 'ad';
+  const name      = document.getElementById(prefix + '-name').value.trim() || '................................';
+  const date      = document.getElementById(prefix + '-date').value || '................................';
+  const csEl      = document.getElementById(prefix + '-cs');
+  const cs        = (csEl.selectedIndex > 0 ? csEl.options[csEl.selectedIndex].text : '................................');
+  const caEl      = document.querySelector(`input[name="${prefix}-ca"]:checked`);
+  const ca        = caEl ? (caEl.value === 'c1' ? 'Ca 1  (7:00 – 17:00)' : 'Ca 2  (7:30 – 17:30)') : '................................';
+  const roleLabel = role === 'tv' ? 'TƯ VẤN TUYỂN SINH' : 'ADMIN TUYỂN SINH';
+
+  // Xác định màu header theo trường
+  const schoolColor = cs.startsWith('PENN') ? '#7c2d12' : cs.startsWith('SISS') ? '#065f46' : cs.startsWith('Mầm non') ? '#6b21a8' : '#1e3a8a';
+
+  const hdrHTML = `
+  <div id="print-hdr" style="font-family:'Roboto',sans-serif;margin-bottom:14px">
+    <div style="background:${schoolColor};color:#fff;padding:10px 16px;border-radius:6px 6px 0 0">
+      <div style="font-size:13pt;font-weight:700;letter-spacing:.5px">BÁO CÁO CÔNG VIỆC HÀNG NGÀY</div>
+      <div style="font-size:9.5pt;font-weight:400;opacity:.85;margin-top:2px">${roleLabel}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:0;border:1px solid ${schoolColor};border-top:none;border-radius:0 0 6px 6px;overflow:hidden">
+      <div style="padding:7px 12px;border-right:1px solid #e2e8f0">
+        <div style="font-size:6.5pt;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px">Họ và tên</div>
+        <div style="font-size:9pt;font-weight:600;color:#1e293b;margin-top:3px;border-bottom:1px solid #cbd5e1;padding-bottom:2px">${name}</div>
+      </div>
+      <div style="padding:7px 12px;border-right:1px solid #e2e8f0">
+        <div style="font-size:6.5pt;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px">Ngày báo cáo</div>
+        <div style="font-size:9pt;font-weight:600;color:#1e293b;margin-top:3px;border-bottom:1px solid #cbd5e1;padding-bottom:2px">${date}</div>
+      </div>
+      <div style="padding:7px 12px;border-right:1px solid #e2e8f0">
+        <div style="font-size:6.5pt;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px">Cơ sở</div>
+        <div style="font-size:9pt;font-weight:600;color:#1e293b;margin-top:3px;border-bottom:1px solid #cbd5e1;padding-bottom:2px">${cs}</div>
+      </div>
+      <div style="padding:7px 12px">
+        <div style="font-size:6.5pt;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px">Ca làm việc</div>
+        <div style="font-size:9pt;font-weight:600;color:#1e293b;margin-top:3px;border-bottom:1px solid #cbd5e1;padding-bottom:2px">${ca}</div>
+      </div>
+    </div>
+  </div>`;
+
+  // Gắn print header, ẩn info-bar
+  const pg      = document.getElementById('pg-' + role);
+  const infoBar = pg.querySelector('.info-bar');
+  infoBar.insertAdjacentHTML('beforebegin', hdrHTML);
+  infoBar.style.display = 'none';
+
+  // Dùng class print-active thay vì style.display
+  // để CSS !important không bị ghi đè
+  pg.classList.add('print-active');
+
+  window.print();
+
+  // Khôi phục sau khi in
+  setTimeout(() => {
+    document.getElementById('print-hdr')?.remove();
+    infoBar.style.display = '';
+    pg.classList.remove('print-active');
+  }, 800);
+}
+
+// ── RESET ────────────────────────────────────────────────────────────────────
+function resetForm() {
+  if (!confirm('Reset toàn bộ dữ liệu form hiện tại?')) return;
+  const pg = document.getElementById('pg-' + role);
+  pg.querySelectorAll('input[type=number],input[type=text],textarea').forEach(el => el.value = '');
+  pg.querySelectorAll('input[type=checkbox],input[type=radio]').forEach(el => el.checked = false);
+  const prefix = role === 'tv' ? 'tv' : 'ad';
+  document.getElementById(prefix + '-date').value = new Date().toISOString().split('T')[0];
+  renderSched(role === 'tv' ? 'tv' : 'ad');
+  toast('Đã reset form ✓');
+}
+
+// ── SUBMIT ───────────────────────────────────────────────────────────────────
+async function submitForm() {
+  const prefix = role === 'tv' ? 'tv' : 'ad';
+  const name = document.getElementById(prefix + '-name').value.trim();
+  const date = document.getElementById(prefix + '-date').value;
+  const csEl = document.getElementById(prefix + '-cs');
+  const cs = csEl.options[csEl.selectedIndex]?.text || '';
+  const caEl = document.querySelector(`input[name="${prefix}-ca"]:checked`);
+  const ca = caEl ? (caEl.value === 'c1' ? 'Ca 1 (7:00–17:00)' : 'Ca 2 (7:30–17:30)') : '';
+
+  if (!name) { toast('⚠️ Chưa nhập họ tên'); return; }
+  if (!date) { toast('⚠️ Chưa chọn ngày'); return; }
+  if (!cs || cs.includes('Chọn')) { toast('⚠️ Chưa chọn cơ sở'); return; }
+  if (!ca) { toast('⚠️ Chưa chọn ca làm việc'); return; }
+
+  // Xác định trường từ giá trị cơ sở
+  const csValue  = document.getElementById(prefix + '-cs').value;
+  let   school   = 'WASS';
+  if (csValue.startsWith('p'))      school = 'PENN';
+  else if (csValue.startsWith('s')) school = 'SISS';
+  else if (csValue.startsWith('m')) school = 'Mầm non';
+
+  // Build data object for Sheets
+  const data = {
+    timestamp: new Date().toISOString(),
+    role: role === 'tv' ? 'Tư Vấn TS' : 'Admin TS',
+    school,
+    name, date, coSo: cs, ca
+  };
+
+  // Collect KPI numbers
+  document.getElementById('pg-' + role).querySelectorAll('.kt tbody tr').forEach(tr => {
+    const lbl = tr.querySelector('.l-cell');
+    const tot = tr.querySelector('.t-cell input');
+    const note = tr.querySelector('.g-cell input[type=text]');
+    if (lbl && tot) {
+      const key = lbl.textContent.trim().substring(0, 40);
+      data[key + '_tong'] = tot.value || '0';
+      if (note) data[key + '_ghichu'] = note.value || '';
+    }
+  });
+
+  // Collect notes
+  const noteAreas = document.getElementById('pg-' + role).querySelectorAll('.note-blk');
+  noteAreas.forEach((blk, i) => {
+    const prompt = blk.querySelector('.note-prompt')?.textContent || ('Ghi chú ' + (i+1));
+    const val = blk.querySelector('textarea')?.value || '';
+    data['note_' + (i+1)] = val;
+  });
+
+  // Build text summary (for clipboard fallback)
+  const lines = [
+    '📋 BÁO CÁO CÔNG VIỆC HÀNG NGÀY – ' + (role === 'tv' ? 'TƯ VẤN TUYỂN SINH' : 'ADMIN TUYỂN SINH'),
+    '─'.repeat(38),
+    `👤 ${name}  |  📅 ${date}`,
+    `🏫 ${cs}  |  ⏰ ${ca}`, '',
+  ];
+  document.getElementById('pg-' + role).querySelectorAll('.sec').forEach(sec => {
+    const h = sec.querySelector('.sec-hd h2');
+    if (!h) return;
+    lines.push('▸ ' + h.textContent.trim());
+    sec.querySelectorAll('.kt tbody tr').forEach(tr => {
+      const lbl = tr.querySelector('.l-cell');
+      const tot = tr.querySelector('.t-cell input');
+      if (lbl && tot && tot.value) lines.push(`  • ${lbl.textContent.trim()}: ${tot.value}`);
+    });
+    sec.querySelectorAll('.note-blk textarea').forEach(ta => {
+      if (ta.value.trim()) lines.push(`  → ${ta.value.trim()}`);
+    });
+    lines.push('');
+  });
+  lines.push('─'.repeat(38));
+  const txt = lines.join('\n');
+
+  // Lấy URL đúng theo trường
+  const targetUrl = getUrlForSchool(csValue) || APPS_SCRIPT_URL;
+
+  // Send to Google Sheets if URL configured
+  if (targetUrl) {
+    try {
+      toast('⏳ Đang gửi...');
+      const btn = document.querySelector('.btn-sub');
+      btn.disabled = true;
+      await fetch(targetUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      btn.disabled = false;
+      toast(`✅ Đã gửi lên Sheets – ${school}!`);
+      if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(()=>{});
+    } catch(e) {
+      btn.disabled = false;
+      toast('⚠️ Lỗi kết nối – đã sao chép báo cáo!');
+      if (navigator.clipboard) navigator.clipboard.writeText(txt);
+    }
+  } else {
+    // No URL: just copy to clipboard
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(txt).then(() => toast('✓ Đã sao chép – dán vào Zalo / Email!'));
+    } else { toast('✓ Hoàn thành!'); }
+  }
+}
+
+// ── SETTINGS MODAL ───────────────────────────────────────────────────────────
+function openSettings() {
+  document.getElementById('settings-modal').classList.add('open');
+  document.getElementById('url-wass').value = localStorage.getItem('gs_url_wass') || '';
+  document.getElementById('url-penn').value = localStorage.getItem('gs_url_penn') || '';
+  document.getElementById('url-siss').value = localStorage.getItem('gs_url_siss') || '';
+  document.getElementById('url-mn').value   = localStorage.getItem('gs_url_mn')   || '';
+  updateGsStatus();
+}
+function updateGsStatus() {
+  const el = document.getElementById('gs-status');
+  if (!el) return;
+  const schools = [
+    { key:'gs_url_wass', label:'WASS',    color:'#1e3a8a' },
+    { key:'gs_url_penn', label:'PENN',    color:'#7c2d12' },
+    { key:'gs_url_siss', label:'SISS',    color:'#065f46' },
+    { key:'gs_url_mn',   label:'Mầm non', color:'#6b21a8' },
+  ];
+  el.innerHTML = schools.map(s => {
+    const has = !!localStorage.getItem(s.key);
+    return `<div style="display:flex;align-items:center;gap:5px;font-size:.73rem">
+      <div style="width:7px;height:7px;border-radius:50%;background:${has ? '#16a34a' : '#94a3b8'}"></div>
+      <span style="color:${s.color};font-weight:600">${s.label}</span>
+      <span style="color:${has ? '#15803d' : '#94a3b8'}">${has ? 'Đã kết nối' : 'Chưa có URL'}</span>
+    </div>`;
+  }).join('');
+}
+function saveSettings() {
+  const map = [
+    ['url-wass','gs_url_wass'],
+    ['url-penn','gs_url_penn'],
+    ['url-siss','gs_url_siss'],
+    ['url-mn',  'gs_url_mn'],
+  ];
+  map.forEach(([inputId, storageKey]) => {
+    const val = document.getElementById(inputId)?.value.trim() || '';
+    if (val) localStorage.setItem(storageKey, val);
+    else     localStorage.removeItem(storageKey);
+  });
+  // backward compat
+  APPS_SCRIPT_URL = localStorage.getItem('gs_url_wass') || '';
+  document.getElementById('settings-modal').classList.remove('open');
+  toast('✓ Đã lưu cài đặt');
+}
+</script>
+</body>
+</html>
