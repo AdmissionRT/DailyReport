@@ -839,31 +839,49 @@ async function submitForm() {
   // Lấy URL đúng theo trường
   const targetUrl = getUrlForSchool(csValue) || APPS_SCRIPT_URL;
 
-  // Send to Google Sheets if URL configured
+  // Luôn copy clipboard trước (không phụ thuộc kết nối)
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(txt).catch(() => {});
+  }
+
+  // Send to Google Sheets nếu có URL
   if (targetUrl) {
+    const btn = document.querySelector('.btn-sub');
+    const origText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Đang gửi...';
+
+    // Dùng Google Apps Script URL redirect trick để tránh CORS
+    // Gửi data qua URL params (GET) thay vì POST body để tránh preflight
+    const params = new URLSearchParams({ data: JSON.stringify(data) });
+    const urlWithData = targetUrl + '?data=' + encodeURIComponent(JSON.stringify(data));
+
     try {
-      toast('⏳ Đang gửi...');
-      const btn = document.querySelector('.btn-sub');
-      btn.disabled = true;
-      await fetch(targetUrl, {
+      // Thử POST trước
+      const resp = await fetch(targetUrl, {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
       btn.disabled = false;
-      toast(`✅ Đã gửi lên Sheets – ${school}!`);
-      if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(()=>{});
+      btn.innerHTML = origText;
+      toast('✅ Đã gửi lên Sheets!');
     } catch(e) {
-      btn.disabled = false;
-      toast('⚠️ Lỗi kết nối – đã sao chép báo cáo!');
-      if (navigator.clipboard) navigator.clipboard.writeText(txt);
+      // Fallback: thử GET
+      try {
+        await fetch(urlWithData, { method: 'GET', mode: 'no-cors' });
+        btn.disabled = false;
+        btn.innerHTML = origText;
+        toast('✅ Đã gửi lên Sheets!');
+      } catch(e2) {
+        btn.disabled = false;
+        btn.innerHTML = origText;
+        toast('⚠️ Mất kết nối – báo cáo đã sao chép, dán vào Zalo/Email!');
+      }
     }
   } else {
-    // No URL: just copy to clipboard
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(txt).then(() => toast('✓ Đã sao chép – dán vào Zalo / Email!'));
-    } else { toast('✓ Hoàn thành!'); }
+    // Chưa cài URL: chỉ copy clipboard
+    toast('✓ Đã sao chép – dán vào Zalo / Email! (Chưa kết nối Sheets)');
   }
 }
 
