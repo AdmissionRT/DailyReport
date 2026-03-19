@@ -556,16 +556,21 @@ const SCHED = {
 };
 
 // ── GOOGLE SHEETS CONFIG ─────────────────────────────────────────────────────
-// Mỗi trường có 1 URL Apps Script riêng, lưu trong localStorage
+// ── URL Apps Script – nhúng thẳng, nhân viên không cần cài đặt gì ──────────
+const URLS = {
+  wass: 'https://script.google.com/macros/s/AKfycbyJwDwXmdEZSAKa-loUiYSgL74n44ZC2QM2BBxLCL5w3gq-EtnvV-ju7V6kdk4YYhMY/exec',
+  penn: 'https://script.google.com/macros/s/AKfycbzWNI6rty7yfAvLlZzc5Oazr7F8LzzhklW5da1iLQRrKgwxhUGmlZKuaFHiJTl2IgJEjA/exec',
+  siss: 'https://script.google.com/macros/s/AKfycbwUC5F4NZprBomLoU2z2M3FJwZoPf77YeDD_po9d9fsrmZgaGg_jyfZXqd7h2gf08miDQ/exec',
+  mn:   'https://script.google.com/macros/s/AKfycbzd2qfTYejfa0IYQiU224iLLrNFyNn5Cqrn0aDzg-Y-cTPdb8Cv8JnH6kF5_pMEdX6E/exec',
+};
+
 function getUrlForSchool(csValue) {
-  if (!csValue) return localStorage.getItem('gs_url_wass') || '';
-  if (csValue.startsWith('p'))  return localStorage.getItem('gs_url_penn') || '';
-  if (csValue.startsWith('s'))  return localStorage.getItem('gs_url_siss') || '';
-  if (csValue.startsWith('m'))  return localStorage.getItem('gs_url_mn')   || '';
-  return localStorage.getItem('gs_url_wass') || ''; // w1,w2,w3 → WASS
+  if (!csValue) return URLS.wass;
+  if (csValue.startsWith('p')) return URLS.penn;
+  if (csValue.startsWith('s')) return URLS.siss;
+  if (csValue.startsWith('m')) return URLS.mn;
+  return URLS.wass;
 }
-// Giữ biến cũ để tương thích với settings modal đơn giản
-let APPS_SCRIPT_URL = localStorage.getItem('gs_url') || '';
 
 // ── STATE ────────────────────────────────────────────────────────────────────
 let role = 'tv';
@@ -782,38 +787,44 @@ async function submitForm() {
   lines.push('─'.repeat(38));
   const txt = lines.join('\n');
 
-  // Lấy URL đúng theo trường
-  const targetUrl = getUrlForSchool(csValue) || APPS_SCRIPT_URL;
+  // Lấy URL theo trường đã chọn
+  const targetUrl = getUrlForSchool(csValue);
 
-  // Send to Google Sheets if URL configured
-  if (targetUrl) {
+  const btn = document.querySelector('.btn-sub');
+  const origHTML = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '⏳ Đang gửi...';
+
+  // Luôn copy clipboard trước
+  if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(() => {});
+
+  try {
+    // Gửi POST không có custom header để tránh CORS preflight
+    await fetch(targetUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify(data)
+    });
+    btn.disabled = false;
+    btn.innerHTML = origHTML;
+    toast('✅ Báo cáo đã được ghi nhận!');
+  } catch(err) {
+    // Fallback: gửi qua GET với data trong URL
     try {
-      toast('⏳ Đang gửi...');
-      const btn = document.querySelector('.btn-sub');
-      btn.disabled = true;
-      await fetch(targetUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+      const fallback = targetUrl + '?data=' + encodeURIComponent(JSON.stringify(data));
+      await fetch(fallback, { method: 'GET', mode: 'no-cors' });
       btn.disabled = false;
-      toast(`✅ Đã gửi lên Sheets – ${school}!`);
-      if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(()=>{});
-    } catch(e) {
+      btn.innerHTML = origHTML;
+      toast('✅ Báo cáo đã được ghi nhận!');
+    } catch(err2) {
       btn.disabled = false;
-      toast('⚠️ Lỗi kết nối – đã sao chép báo cáo!');
-      if (navigator.clipboard) navigator.clipboard.writeText(txt);
+      btn.innerHTML = origHTML;
+      toast('⚠️ Mất kết nối – báo cáo đã sao chép vào clipboard!');
     }
-  } else {
-    // No URL: just copy to clipboard
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(txt).then(() => toast('✓ Đã sao chép – dán vào Zalo / Email!'));
-    } else { toast('✓ Hoàn thành!'); }
   }
 }
 
-// Settings removed – URLs are embedded directly in code
+
 </script>
 </body>
 </html>
