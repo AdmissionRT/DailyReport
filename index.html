@@ -146,8 +146,7 @@ body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
 .btn-print{padding:10px 14px;background:var(--white);color:var(--rp);border:1.5px solid var(--rp);border-radius:var(--radius);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .18s;white-space:nowrap;display:flex;align-items:center;gap:5px}
 .btn-print:hover{background:var(--rlt)}
 .btn-sub{flex:1;padding:10px;background:var(--rp);color:#fff;border:none;border-radius:var(--radius);font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
-.btn-cfg{padding:10px 12px;background:var(--gray-100);color:var(--gray-600);border:none;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0}
-.btn-cfg:hover{background:var(--gray-200);color:var(--rp)}
+
 .btn-sub:active{transform:scale(.98)}
 .toast{position:fixed;bottom:66px;left:50%;transform:translateX(-50%) translateY(12px);background:#1e293b;color:#fff;padding:8px 18px;border-radius:20px;font-size:.8rem;font-weight:500;opacity:0;transition:all .28s;pointer-events:none;z-index:300;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -433,56 +432,6 @@ body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
 
 </div></div><!-- /pg-admin -->
 
-<!-- SETTINGS MODAL -->
-<div class="modal-ov" id="settings-modal">
-  <div class="modal-box">
-    <h3>⚙️ Kết nối Google Sheets theo trường</h3>
-    <p>Mỗi trường có 1 file Google Sheets riêng. Dán URL Apps Script tương ứng vào từng ô bên dưới.</p>
-
-    <div class="step"><div class="step-num">1</div><div><p>Tạo file Google Sheets cho từng trường → <strong>Extensions → Apps Script</strong> → dán code từ file <code>apps-script.js</code></p></div></div>
-    <div class="step"><div class="step-num">2</div><div><p><strong>Deploy → New deployment → Web app</strong> · Execute as: <em>Me</em> · Who has access: <em>Anyone</em> → Copy URL</p></div></div>
-    <div class="step"><div class="step-num">3</div><div><p>Dán URL vào đúng ô trường bên dưới → nhấn <strong>Lưu</strong>. Ô nào chưa có URL thì báo cáo sẽ sao chép vào clipboard.</p></div></div>
-
-    <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
-      <div>
-        <label style="font-size:.7rem;font-weight:700;color:#1e3a8a;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px">
-          <span style="background:#1e3a8a;color:#fff;border-radius:4px;padding:1px 7px;font-size:.68rem">WASS</span> URL Apps Script
-        </label>
-        <input class="modal-input" id="url-wass" type="url" placeholder="https://script.google.com/macros/s/..." style="margin-top:5px;margin-bottom:0">
-      </div>
-      <div>
-        <label style="font-size:.7rem;font-weight:700;color:#7c2d12;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px">
-          <span style="background:#c2410c;color:#fff;border-radius:4px;padding:1px 7px;font-size:.68rem">PENN</span> URL Apps Script
-        </label>
-        <input class="modal-input" id="url-penn" type="url" placeholder="https://script.google.com/macros/s/..." style="margin-top:5px;margin-bottom:0">
-      </div>
-      <div>
-        <label style="font-size:.7rem;font-weight:700;color:#065f46;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px">
-          <span style="background:#065f46;color:#fff;border-radius:4px;padding:1px 7px;font-size:.68rem">SISS</span> URL Apps Script
-        </label>
-        <input class="modal-input" id="url-siss" type="url" placeholder="https://script.google.com/macros/s/..." style="margin-top:5px;margin-bottom:0">
-      </div>
-      <div>
-        <label style="font-size:.7rem;font-weight:700;color:#6b21a8;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:5px">
-          <span style="background:#6b21a8;color:#fff;border-radius:4px;padding:1px 7px;font-size:.68rem">MẦM NON</span> URL Apps Script
-        </label>
-        <input class="modal-input" id="url-mn" type="url" placeholder="https://script.google.com/macros/s/..." style="margin-top:5px;margin-bottom:0">
-      </div>
-    </div>
-
-    <div id="gs-status" style="margin-top:10px;display:flex;flex-direction:column;gap:4px"></div>
-
-    <div style="background:#fffbeb;border:1px solid #fbbf24;border-radius:8px;padding:10px 12px;margin-top:12px;font-size:.75rem;color:#92400e;line-height:1.6">
-      <strong>💡 Chưa có URL?</strong> Form vẫn hoạt động bình thường.
-    </div>
-
-    <div class="modal-actions">
-      <button class="modal-cancel" onclick="document.getElementById('settings-modal').classList.remove('open')">Đóng</button>
-      <button class="modal-save" onclick="saveSettings()">Lưu cài đặt</button>
-    </div>
-  </div>
-</div>
-
 <!-- BOTTOM -->
 <div class="btm">
   <button class="btn-rst" onclick="resetForm()">↺ Reset</button>
@@ -491,9 +440,6 @@ body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
     In / Save PDF
   </button>
   <button class="btn-sub" onclick="submitForm()">✓ Nộp Báo Cáo</button>
-  <button class="btn-cfg" onclick="openSettings()" title="Cài đặt kết nối Google Sheets">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-  </button>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -839,96 +785,35 @@ async function submitForm() {
   // Lấy URL đúng theo trường
   const targetUrl = getUrlForSchool(csValue) || APPS_SCRIPT_URL;
 
-  // Luôn copy clipboard trước (không phụ thuộc kết nối)
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(txt).catch(() => {});
-  }
-
-  // Send to Google Sheets nếu có URL
+  // Send to Google Sheets if URL configured
   if (targetUrl) {
-    const btn = document.querySelector('.btn-sub');
-    const origText = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = '⏳ Đang gửi...';
-
-    // Dùng Google Apps Script URL redirect trick để tránh CORS
-    // Gửi data qua URL params (GET) thay vì POST body để tránh preflight
-    const params = new URLSearchParams({ data: JSON.stringify(data) });
-    const urlWithData = targetUrl + '?data=' + encodeURIComponent(JSON.stringify(data));
-
     try {
-      // Thử POST trước
-      const resp = await fetch(targetUrl, {
+      toast('⏳ Đang gửi...');
+      const btn = document.querySelector('.btn-sub');
+      btn.disabled = true;
+      await fetch(targetUrl, {
         method: 'POST',
         mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
       btn.disabled = false;
-      btn.innerHTML = origText;
-      toast('✅ Đã gửi lên Sheets!');
+      toast(`✅ Đã gửi lên Sheets – ${school}!`);
+      if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(()=>{});
     } catch(e) {
-      // Fallback: thử GET
-      try {
-        await fetch(urlWithData, { method: 'GET', mode: 'no-cors' });
-        btn.disabled = false;
-        btn.innerHTML = origText;
-        toast('✅ Đã gửi lên Sheets!');
-      } catch(e2) {
-        btn.disabled = false;
-        btn.innerHTML = origText;
-        toast('⚠️ Mất kết nối – báo cáo đã sao chép, dán vào Zalo/Email!');
-      }
+      btn.disabled = false;
+      toast('⚠️ Lỗi kết nối – đã sao chép báo cáo!');
+      if (navigator.clipboard) navigator.clipboard.writeText(txt);
     }
   } else {
-    // Chưa cài URL: chỉ copy clipboard
-    toast('✓ Đã sao chép – dán vào Zalo / Email! (Chưa kết nối Sheets)');
+    // No URL: just copy to clipboard
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(txt).then(() => toast('✓ Đã sao chép – dán vào Zalo / Email!'));
+    } else { toast('✓ Hoàn thành!'); }
   }
 }
 
-// ── SETTINGS MODAL ───────────────────────────────────────────────────────────
-function openSettings() {
-  document.getElementById('settings-modal').classList.add('open');
-  document.getElementById('url-wass').value = localStorage.getItem('gs_url_wass') || '';
-  document.getElementById('url-penn').value = localStorage.getItem('gs_url_penn') || '';
-  document.getElementById('url-siss').value = localStorage.getItem('gs_url_siss') || '';
-  document.getElementById('url-mn').value   = localStorage.getItem('gs_url_mn')   || '';
-  updateGsStatus();
-}
-function updateGsStatus() {
-  const el = document.getElementById('gs-status');
-  if (!el) return;
-  const schools = [
-    { key:'gs_url_wass', label:'WASS',    color:'#1e3a8a' },
-    { key:'gs_url_penn', label:'PENN',    color:'#7c2d12' },
-    { key:'gs_url_siss', label:'SISS',    color:'#065f46' },
-    { key:'gs_url_mn',   label:'Mầm non', color:'#6b21a8' },
-  ];
-  el.innerHTML = schools.map(s => {
-    const has = !!localStorage.getItem(s.key);
-    return `<div style="display:flex;align-items:center;gap:5px;font-size:.73rem">
-      <div style="width:7px;height:7px;border-radius:50%;background:${has ? '#16a34a' : '#94a3b8'}"></div>
-      <span style="color:${s.color};font-weight:600">${s.label}</span>
-      <span style="color:${has ? '#15803d' : '#94a3b8'}">${has ? 'Đã kết nối' : 'Chưa có URL'}</span>
-    </div>`;
-  }).join('');
-}
-function saveSettings() {
-  const map = [
-    ['url-wass','gs_url_wass'],
-    ['url-penn','gs_url_penn'],
-    ['url-siss','gs_url_siss'],
-    ['url-mn',  'gs_url_mn'],
-  ];
-  map.forEach(([inputId, storageKey]) => {
-    const val = document.getElementById(inputId)?.value.trim() || '';
-    if (val) localStorage.setItem(storageKey, val);
-    else     localStorage.removeItem(storageKey);
-  });
-  // backward compat
-  APPS_SCRIPT_URL = localStorage.getItem('gs_url_wass') || '';
-  document.getElementById('settings-modal').classList.remove('open');
-  toast('✓ Đã lưu cài đặt');
-}
+// Settings removed – URLs are embedded directly in code
 </script>
 </body>
 </html>
