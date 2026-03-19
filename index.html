@@ -84,11 +84,10 @@ body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
 .kt tr:hover td{background:#fafbfc}
 .s-cell{text-align:center;font-size:.72rem;font-weight:700;color:var(--ra);width:26px;padding:6px 4px}
 .l-cell{font-size:.81rem;color:var(--gray-700);min-width:110px;line-height:1.4}
-.n-cell{width:64px;padding:4px}
-.n-cell input{width:100%;padding:5px 4px;border:1.5px solid var(--gray-200);border-radius:5px;font-size:.84rem;text-align:center;background:var(--white);transition:border .15s}
-.n-cell input:focus{outline:none;border-color:var(--ra)}
-.t-cell{width:64px;padding:4px}
-.t-cell input{width:100%;padding:5px 4px;border:1.5px solid var(--gray-200);border-radius:5px;font-size:.84rem;font-weight:700;text-align:center;background:var(--rpa);color:var(--rp);pointer-events:none}
+.n-cell{display:none}
+.t-cell{width:80px;padding:4px}
+.t-cell input{width:100%;padding:7px 4px;border:1.5px solid var(--ra);border-radius:5px;font-size:.9rem;font-weight:600;text-align:center;background:var(--white);color:var(--gray-800);pointer-events:all;cursor:text}
+.t-cell input:focus{outline:none;border-color:var(--ra);box-shadow:0 0 0 3px rgba(59,130,246,.1)}
 .g-cell{min-width:88px;padding:4px}
 .g-cell input,.g-cell textarea{width:100%;padding:5px 7px;border:1.5px solid var(--gray-200);border-radius:5px;font-size:.75rem;color:var(--gray-700);resize:none;transition:border .15s;background:var(--white)}
 .g-cell input:focus,.g-cell textarea:focus{outline:none;border-color:var(--ra)}
@@ -171,7 +170,7 @@ body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
   .l-cell{font-size:7.5pt!important}
   .n-cell{width:48px!important}
   .n-cell input,.t-cell input{width:100%!important;padding:3px!important;border:1px solid #ccc!important;background:#fff!important;font-size:8pt!important;min-height:16px!important}
-  .t-cell input{background:#e8f5e9!important}
+  .t-cell input{background:#fff!important;border:1px solid #ccc!important}
   .g-cell input,.g-cell textarea{border:1px solid #ccc!important;background:#fff!important;font-size:7.5pt!important;min-height:16px!important;padding:3px 5px!important}
   /* Schedule */
   .sct th{font-size:7pt!important;padding:4px 6px!important}
@@ -266,27 +265,27 @@ body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
     <div class="sec-hd"><h2>A. KPI TELESALE &amp; TIẾP CẬN LEADS</h2></div>
     <div class="sec-bd">
       <div class="grp grp-blue">📋 LEADS MỚI (MKT chia về trong ngày)</div>
-      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th style="width:80px">Số lượng</th><th class="tl">Ghi chú</th></tr></thead>
       <tbody>
-        <tr><td class="s-cell">1</td><td class="l-cell">Số leads mới được chia trong ngày</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA1')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA1')"></td><td class="t-cell"><input id="tvA1-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">2</td><td class="l-cell">Số cuộc gọi thực hiện cho leads mới</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA2')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA2')"></td><td class="t-cell"><input id="tvA2-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">3</td><td class="l-cell">Số PH nghe máy (leads mới)</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA3')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA3')"></td><td class="t-cell"><input id="tvA3-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">4</td><td class="l-cell">Số PH quan tâm – hẹn tư vấn thêm / gửi Zalo</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA4')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA4')"></td><td class="t-cell"><input id="tvA4-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">5</td><td class="l-cell">Số gia đình hẹn tham quan trường trong ngày</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA5')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA5')"></td><td class="t-cell"><input id="tvA5-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">1</td><td class="l-cell">Số leads mới được chia trong ngày</td><td class="t-cell"><input id="tvA1-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">2</td><td class="l-cell">Số cuộc gọi thực hiện cho leads mới</td><td class="t-cell"><input id="tvA2-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">3</td><td class="l-cell">Số PH nghe máy (leads mới)</td><td class="t-cell"><input id="tvA3-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">4</td><td class="l-cell">Số PH quan tâm – hẹn tư vấn thêm / gửi Zalo</td><td class="t-cell"><input id="tvA4-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">5</td><td class="l-cell">Số gia đình hẹn tham quan trường trong ngày</td><td class="t-cell"><input id="tvA5-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
       </tbody></table>
 
       <div class="grp grp-green">📋 DATA CŨ (follow-up CRM task)</div>
-      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th style="width:80px">Số lượng</th><th class="tl">Ghi chú</th></tr></thead>
       <tbody>
-        <tr><td class="s-cell">6</td><td class="l-cell">Số cuộc gọi / tin nhắn chăm sóc data cũ</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA6')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA6')"></td><td class="t-cell"><input id="tvA6-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">7</td><td class="l-cell">Số leads chuyển sang Opportunity (qualified)</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA7')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA7')"></td><td class="t-cell"><input id="tvA7-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">6</td><td class="l-cell">Số cuộc gọi / tin nhắn chăm sóc data cũ</td><td class="t-cell"><input id="tvA6-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">7</td><td class="l-cell">Số leads chuyển sang Opportunity (qualified)</td><td class="t-cell"><input id="tvA7-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
       </tbody></table>
 
       <div class="grp grp-gray">📋 DATA QUÉT (booth / trường khác / tổng hợp)</div>
-      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th style="width:80px">Số lượng</th><th class="tl">Ghi chú</th></tr></thead>
       <tbody>
-        <tr><td class="s-cell">8</td><td class="l-cell">Số cuộc gọi data quét</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA8')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA8')"></td><td class="t-cell"><input id="tvA8-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">9</td><td class="l-cell">Số PH nghe máy (data quét)</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA9')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvA9')"></td><td class="t-cell"><input id="tvA9-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">8</td><td class="l-cell">Số cuộc gọi data quét</td><td class="t-cell"><input id="tvA8-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">9</td><td class="l-cell">Số PH nghe máy (data quét)</td><td class="t-cell"><input id="tvA9-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
       </tbody></table>
     </div>
   </div>
@@ -295,12 +294,12 @@ body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
   <div class="sec">
     <div class="sec-hd"><h2>B. TIẾP NHẬN &amp; XỬ LÝ CASE PHẢN HỒI PHHS</h2><span class="note">Zalo · ĐT · Trực tiếp · SPS360 · Email</span></div>
     <div class="sec-bd">
-      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th style="width:80px">Số lượng</th><th class="tl">Ghi chú</th></tr></thead>
       <tbody>
-        <tr><td class="s-cell">10</td><td class="l-cell">Số case PHHS tiếp nhận trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB10')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB10')"></td><td class="t-cell"><input id="tvB10-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">10</td><td class="l-cell">Số case PHHS tiếp nhận trong ca</td><td class="t-cell"><input id="tvB10-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
 
-        <tr><td class="s-cell">11</td><td class="l-cell">Số case đã xử lý xong trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB11')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB11')"></td><td class="t-cell"><input id="tvB11-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">12</td><td class="l-cell">Số case đang chờ phối hợp bộ phận khác</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB12')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvB12')"></td><td class="t-cell"><input id="tvB12-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Tên bộ phận..."></td></tr>
+        <tr><td class="s-cell">11</td><td class="l-cell">Số case đã xử lý xong trong ca</td><td class="t-cell"><input id="tvB11-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">12</td><td class="l-cell">Số case đang chờ phối hợp bộ phận khác</td><td class="t-cell"><input id="tvB12-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Tên bộ phận..."></td></tr>
       </tbody></table>
     </div>
   </div>
@@ -309,10 +308,10 @@ body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
   <div class="sec">
     <div class="sec-hd"><h2>C. HỒ SƠ HỌC SINH &amp; VẬN HÀNH CƠ SỞ</h2></div>
     <div class="sec-bd">
-      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th style="width:80px">Số lượng</th><th class="tl">Ghi chú</th></tr></thead>
       <tbody>
-        <tr><td class="s-cell">13</td><td class="l-cell">Hồ sơ mới tiếp nhận / hoàn thiện trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvC13')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvC13')"></td><td class="t-cell"><input id="tvC13-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">14</td><td class="l-cell">Sự cố vận hành cơ sở phát sinh trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvC14')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'tvC14')"></td><td class="t-cell"><input id="tvC14-t" readonly placeholder="—"></td>
+        <tr><td class="s-cell">13</td><td class="l-cell">Hồ sơ mới tiếp nhận / hoàn thiện trong ca</td><td class="t-cell"><input id="tvC13-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">14</td><td class="l-cell">Sự cố vận hành cơ sở phát sinh trong ca</td><td class="t-cell"><input id="tvC14-t" type="number" min="0" placeholder="0"></td>
           <td class="g-cell"><div style="font-size:.7rem;color:var(--gray-500);margin-bottom:3px">Đã báo bộ phận:</div><div class="chk-wrap"><label><input type="checkbox"> IT</label><label><input type="checkbox"> Vận hành</label><label><input type="checkbox"> BGH</label></div></td></tr>
       </tbody></table>
     </div>
@@ -372,11 +371,11 @@ body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
   <div class="sec">
     <div class="sec-hd"><h2>A. TIẾP NHẬN HOTLINE, FANPAGE &amp; CRM</h2></div>
     <div class="sec-bd">
-      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th style="width:80px">Số lượng</th><th class="tl">Ghi chú</th></tr></thead>
       <tbody>
-        <tr><td class="s-cell">1</td><td class="l-cell">Số PH phản hồi qua Hotline (nghe máy, nhắn lại)</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA1')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA1')"></td><td class="t-cell"><input id="adA1-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">2</td><td class="l-cell">Số tin nhắn Fanpage / Zalo đã phản hồi</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA2')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA2')"></td><td class="t-cell"><input id="adA2-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">3</td><td class="l-cell">Số thông tin PH/HS nhập vào CRM trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA3')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adA3')"></td><td class="t-cell"><input id="adA3-t" readonly placeholder="—"></td>
+        <tr><td class="s-cell">1</td><td class="l-cell">Số PH phản hồi qua Hotline (nghe máy, nhắn lại)</td><td class="t-cell"><input id="adA1-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">2</td><td class="l-cell">Số tin nhắn Fanpage / Zalo đã phản hồi</td><td class="t-cell"><input id="adA2-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">3</td><td class="l-cell">Số thông tin PH/HS nhập vào CRM trong ca</td><td class="t-cell"><input id="adA3-t" type="number" min="0" placeholder="0"></td>
           <td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
       </tbody></table>
     </div>
@@ -386,13 +385,13 @@ body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
   <div class="sec">
     <div class="sec-hd"><h2>B. CASE PHẢN HỒI PHHS</h2><span class="note">Nghỉ phép · Học phí · Phản ánh · Hỏi TT</span></div>
     <div class="sec-bd">
-      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th style="width:80px">Số lượng</th><th class="tl">Ghi chú</th></tr></thead>
       <tbody>
-        <tr><td class="s-cell">4</td><td class="l-cell">Số case PHHS tiếp nhận trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB4')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB4')"></td><td class="t-cell"><input id="adB4-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">4</td><td class="l-cell">Số case PHHS tiếp nhận trong ca</td><td class="t-cell"><input id="adB4-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
 
-        <tr><td class="s-cell">5</td><td class="l-cell">Số case xử lý xong trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB5')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB5')"></td><td class="t-cell"><input id="adB5-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">6</td><td class="l-cell">Số case chuyển phối hợp bộ phận khác</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB6')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB6')"></td><td class="t-cell"><input id="adB6-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Tên bộ phận..."></td></tr>
-        <tr><td class="s-cell">7</td><td class="l-cell">Số case tồn đọng chuyển sang ngày hôm sau</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB7')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adB7')"></td><td class="t-cell"><input id="adB7-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Lý do tồn đọng..."></td></tr>
+        <tr><td class="s-cell">5</td><td class="l-cell">Số case xử lý xong trong ca</td><td class="t-cell"><input id="adB5-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">6</td><td class="l-cell">Số case chuyển phối hợp bộ phận khác</td><td class="t-cell"><input id="adB6-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Tên bộ phận..."></td></tr>
+        <tr><td class="s-cell">7</td><td class="l-cell">Số case tồn đọng chuyển sang ngày hôm sau</td><td class="t-cell"><input id="adB7-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Lý do tồn đọng..."></td></tr>
       </tbody></table>
     </div>
   </div>
@@ -401,11 +400,11 @@ body.role-admin .fi:focus{box-shadow:0 0 0 3px rgba(22,163,74,.1)}
   <div class="sec">
     <div class="sec-hd"><h2>C. HỒ SƠ HỌC SINH &amp; VẬN HÀNH CƠ SỞ</h2></div>
     <div class="sec-bd">
-      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th>Sáng</th><th>Chiều</th><th>Tổng</th><th class="tl">Ghi chú</th></tr></thead>
+      <table class="kt"><thead><tr><th style="width:26px">#</th><th class="tl">Chỉ tiêu</th><th style="width:80px">Số lượng</th><th class="tl">Ghi chú</th></tr></thead>
       <tbody>
-        <tr><td class="s-cell">8</td><td class="l-cell">Hồ sơ mới tiếp nhận / hoàn thiện trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC8')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC8')"></td><td class="t-cell"><input id="adC8-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">9</td><td class="l-cell">Số HS Entrance Test được xử lý / xác nhận</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC9')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC9')"></td><td class="t-cell"><input id="adC9-t" readonly placeholder="—"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
-        <tr><td class="s-cell">10</td><td class="l-cell">Sự cố vận hành cơ sở phát sinh trong ca</td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC10')"></td><td class="n-cell"><input type="number" min="0" placeholder="0" oninput="calc(this,'adC10')"></td><td class="t-cell"><input id="adC10-t" readonly placeholder="—"></td>
+        <tr><td class="s-cell">8</td><td class="l-cell">Hồ sơ mới tiếp nhận / hoàn thiện trong ca</td><td class="t-cell"><input id="adC8-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">9</td><td class="l-cell">Số HS Entrance Test được xử lý / xác nhận</td><td class="t-cell"><input id="adC9-t" type="number" min="0" placeholder="0"></td><td class="g-cell"><input type="text" placeholder="Ghi chú..."></td></tr>
+        <tr><td class="s-cell">10</td><td class="l-cell">Sự cố vận hành cơ sở phát sinh trong ca</td><td class="t-cell"><input id="adC10-t" type="number" min="0" placeholder="0"></td>
           <td class="g-cell"><div style="font-size:.7rem;color:var(--gray-500);margin-bottom:3px">Đã báo bộ phận:</div><div class="chk-wrap"><label><input type="checkbox"> IT</label><label><input type="checkbox"> Vận hành</label><label><input type="checkbox"> BGH</label></div></td></tr>
       </tbody></table>
     </div>
@@ -556,14 +555,13 @@ const SCHED = {
 };
 
 // ── GOOGLE SHEETS CONFIG ─────────────────────────────────────────────────────
-// ── URL Apps Script – nhúng thẳng, nhân viên không cần cài đặt gì ──────────
+// ── URL cố định – nhân viên không cần cài đặt gì ────────────────────────────
 const URLS = {
   wass: 'https://script.google.com/macros/s/AKfycbyJwDwXmdEZSAKa-loUiYSgL74n44ZC2QM2BBxLCL5w3gq-EtnvV-ju7V6kdk4YYhMY/exec',
   penn: 'https://script.google.com/macros/s/AKfycbzWNI6rty7yfAvLlZzc5Oazr7F8LzzhklW5da1iLQRrKgwxhUGmlZKuaFHiJTl2IgJEjA/exec',
   siss: 'https://script.google.com/macros/s/AKfycbwUC5F4NZprBomLoU2z2M3FJwZoPf77YeDD_po9d9fsrmZgaGg_jyfZXqd7h2gf08miDQ/exec',
   mn:   'https://script.google.com/macros/s/AKfycbzd2qfTYejfa0IYQiU224iLLrNFyNn5Cqrn0aDzg-Y-cTPdb8Cv8JnH6kF5_pMEdX6E/exec',
 };
-
 function getUrlForSchool(csValue) {
   if (!csValue) return URLS.wass;
   if (csValue.startsWith('p')) return URLS.penn;
@@ -625,14 +623,8 @@ function renderSched(r) {
   `).join('');
 }
 
-// ── CALC TOTAL ───────────────────────────────────────────────────────────────
-function calc(inp, id) {
-  const tr = inp.closest('tr');
-  const nums = tr.querySelectorAll('td.n-cell input');
-  let s = 0; nums.forEach(n => s += parseInt(n.value) || 0);
-  const t = document.getElementById(id + '-t');
-  if (t) t.value = s > 0 ? s : '';
-}
+// ── CALC – không còn dùng (đã bỏ cột Sáng/Chiều) ────────────────────────────
+function calc(inp, id) {} // kept for compatibility
 
 // ── TOAST ────────────────────────────────────────────────────────────────────
 function toast(msg) {
@@ -743,7 +735,7 @@ async function submitForm() {
     name, date, coSo: cs, ca
   };
 
-  // Collect KPI numbers
+  // Collect KPI (1 cột cả ngày)
   document.getElementById('pg-' + role).querySelectorAll('.kt tbody tr').forEach(tr => {
     const lbl = tr.querySelector('.l-cell');
     const tot = tr.querySelector('.t-cell input');
@@ -787,44 +779,30 @@ async function submitForm() {
   lines.push('─'.repeat(38));
   const txt = lines.join('\n');
 
-  // Lấy URL theo trường đã chọn
+  // Lấy URL đúng theo trường
   const targetUrl = getUrlForSchool(csValue);
-
   const btn = document.querySelector('.btn-sub');
   const origHTML = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = '⏳ Đang gửi...';
-
-  // Luôn copy clipboard trước
   if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(() => {});
-
   try {
-    // Gửi POST không có custom header để tránh CORS preflight
-    await fetch(targetUrl, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: JSON.stringify(data)
-    });
-    btn.disabled = false;
-    btn.innerHTML = origHTML;
+    await fetch(targetUrl, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+    btn.disabled = false; btn.innerHTML = origHTML;
     toast('✅ Báo cáo đã được ghi nhận!');
   } catch(err) {
-    // Fallback: gửi qua GET với data trong URL
     try {
-      const fallback = targetUrl + '?data=' + encodeURIComponent(JSON.stringify(data));
-      await fetch(fallback, { method: 'GET', mode: 'no-cors' });
-      btn.disabled = false;
-      btn.innerHTML = origHTML;
+      await fetch(targetUrl + '?data=' + encodeURIComponent(JSON.stringify(data)), { method: 'GET', mode: 'no-cors' });
+      btn.disabled = false; btn.innerHTML = origHTML;
       toast('✅ Báo cáo đã được ghi nhận!');
     } catch(err2) {
-      btn.disabled = false;
-      btn.innerHTML = origHTML;
-      toast('⚠️ Mất kết nối – báo cáo đã sao chép vào clipboard!');
+      btn.disabled = false; btn.innerHTML = origHTML;
+      toast('⚠️ Mất kết nối – báo cáo đã sao chép!');
     }
   }
 }
 
-
+// Settings removed – URLs are embedded directly in code
 </script>
 </body>
 </html>
